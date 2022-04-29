@@ -15,9 +15,9 @@ default:
 _build-latest: 
     #!/usr/bin/env bash
     set -euxo pipefail
-    LATEST="$(jq -r .builds[0].imageName skaffold.json):latest"
-    echo $LATEST
-    CURRENT="$(jq -r .builds[0].tag skaffold.json)"
+#    LATEST="$(jq -r .builds[0].imageName skaffold.json):latest"
+#    echo $LATEST
+#    CURRENT="$(jq -r .builds[0].tag skaffold.json)"
 #    docker tag $CURRENT $LATEST
     docker buildx build --platform linux/arm64,linux/amd64 -t subham328/kube-mgmt:latest --push .
     
