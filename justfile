@@ -9,7 +9,7 @@ default:
 
 # build docker image and pack helm chart
 @build: _skaffold-ctx
-    skaffold build -t {{VERSION}} --file-output=skaffold.json
+    #skaffold build -t {{VERSION}} --file-output=skaffold.json
     helm package charts/opa --version {{VERSION}} --app-version {{VERSION}}
 
 _build-latest: build
