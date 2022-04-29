@@ -25,32 +25,35 @@ jobs:
       - name: Build docker image
         run: |
           just VERSION=${{ steps.theVersion.outputs.theVersion }} _build-latest
-#       - name: Upload Helm artifact
-#         uses: actions/upload-artifact@v2
-#         with:
-#           name: "helm"
-#           path: "opa-${{ steps.theVersion.outputs.theVersion }}.tgz"
+      - name: Release docker image
+        run: |
+          just docker_image_release
+      - name: Upload Helm artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: "helm"
+          path: "opa-${{ steps.theVersion.outputs.theVersion }}.tgz"
 
-#   helm_job:
-#     name: Helm chart
-#     runs-on: ubuntu-latest
-#     needs: docker_job
-#     steps:
-#       - uses: actions/checkout@v2
-#         with:
-#           ref: gh-pages
-#       - name: Download artifact from build job
-#         uses: actions/download-artifact@v2
-#         id: download
-#         with:
-#           name: helm
-#           path: /tmp/helm
-#       - name: Update Helm index
-#         run: |
-#           helm repo index /tmp/helm --merge ./charts/index.yaml
-#           mv -f /tmp/helm/* ./charts
-#       - name: Publish index and chart to gh-pages
-#         uses: actions-js/push@master
-#         with:
-#           github_token: ${{ secrets.GITHUB_TOKEN }}
-#           branch: gh-pages
+  helm_job:
+    name: Helm chart
+    runs-on: ubuntu-latest
+    needs: docker_job
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v2
+        id: download
+        with:
+          name: helm
+          path: /tmp/helm
+      - name: Update Helm index
+        run: |
+          helm repo index /tmp/helm --merge ./charts/index.yaml
+          mv -f /tmp/helm/* ./charts
+      - name: Publish index and chart to gh-pages
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
