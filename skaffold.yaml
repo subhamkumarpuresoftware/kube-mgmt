@@ -4,14 +4,14 @@ metadata:
   name: opa
 build:
   artifacts:
-    - image: openpolicyagent/kube-mgmt
+    - image: subham328/kube-mgmt
       context: .
       docker:
         buildArgs:
           VERSION: "{{.VERSION}}"
           COMMIT: "{{.COMMIT}}"
   local:
-    push: true
+    push: false
     useBuildkit: true
 profiles:
   - name: local
