@@ -12,13 +12,14 @@ default:
     skaffold build -t {{VERSION}} --file-output=skaffold.json
     helm package charts/opa --version {{VERSION}} --app-version {{VERSION}}
 
-_build-latest: 
+_build-latest: build
     #!/usr/bin/env bash
     set -euxo pipefail
-    #LATEST="$(jq -r .builds[0].imageName skaffold.json):latest"
-    #CURRENT="$(jq -r .builds[0].tag skaffold.json)"
-    #docker tag $CURRENT $LATEST
+    LATEST="$(jq -r .builds[0].imageName skaffold.json):latest"
+    CURRENT="$(jq -r .builds[0].tag skaffold.json)"
+    docker tag $CURRENT $LATEST
     #docker push $LATEST
+    echo $LATEST
     docker buildx build --platform linux/arm64,linux/amd64 -t subham328/kube-mgmt:lstest --push .
     
 
