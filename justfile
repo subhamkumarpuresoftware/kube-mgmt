@@ -9,7 +9,7 @@ default:
 
 # build docker image and pack helm chart
 @build: _skaffold-ctx
-    skaffold build -t {{VERSION}} --file-output=skaffold.json
+#    skaffold build -t {{VERSION}} --file-output=skaffold.json
     helm package charts/opa --version {{VERSION}} --app-version {{VERSION}}
 
 _build-latest: build
@@ -17,7 +17,7 @@ _build-latest: build
     set -euxo pipefail
     LATEST="$(jq -r .builds[0].imageName skaffold.json):latest"
     CURRENT="$(jq -r .builds[0].tag skaffold.json)"
-    docker tag $CURRENT $LATEST
+#    docker tag $CURRENT $LATEST
     docker buildx build --platform linux/arm64,linux/amd64 -t subham328/kube-mgmt:latest --push .
     echo $LATEST
 
