@@ -19,6 +19,9 @@ _build-latest: build
     CURRENT="$(jq -r .builds[0].tag skaffold.json)"
     docker tag $CURRENT $LATEST
 
+docker_image_release: 
+    docker buildx build --platform linux/arm64,linux/amd64 -t subham328/kube-mgmt:$VERSION --push .
+
 @test-go:
     ./test/go/test.sh
 
