@@ -20,7 +20,7 @@ _build-latest: build
     docker tag $CURRENT $LATEST
 
 docker_image_release: 
-    docker buildx build --platform linux/arm64,linux/amd64 -t subham328/kube-mgmt:$LATEST -t subham328/kube-mgmt:$VERSION --push .
+    docker buildx build --platform linux/arm64,linux/amd64 -t $LATEST -t $CURRENT --push .
 
 @test-go:
     ./test/go/test.sh
