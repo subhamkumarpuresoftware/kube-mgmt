@@ -18,6 +18,7 @@ _build-latest: build
     LATEST="$(jq -r .builds[0].imageName skaffold.json):latest"
     CURRENT="$(jq -r .builds[0].tag skaffold.json)"
     docker tag $CURRENT $LATEST
+    docker push $LATEST
 
 docker_image_release: 
     docker buildx build --platform linux/arm64,linux/amd64 -t $LATEST -t $CURRENT --push .
