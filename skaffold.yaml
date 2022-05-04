@@ -11,7 +11,7 @@ build:
         buildArgs:
           VERSION: "{{.VERSION}}"
           COMMIT: "{{.COMMIT}}"
-    - image: subham328/kube-mgmt
+    - image: subham328/kube-mgmt-arm64
       context: .
       platforms: ["linux/arm64"]
       docker:
