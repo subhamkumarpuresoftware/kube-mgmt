@@ -6,12 +6,20 @@ build:
   artifacts:
     - image: subham328/kube-mgmt
       context: .
+      platforms: ["linux/amd64"]
+      docker:
+        buildArgs:
+          VERSION: "{{.VERSION}}"
+          COMMIT: "{{.COMMIT}}"
+    - image: subham328/kube-mgmt
+      context: .
+      platforms: ["linux/arm64"]
       docker:
         buildArgs:
           VERSION: "{{.VERSION}}"
           COMMIT: "{{.COMMIT}}"
   local:
-    push: false
+    push: true
     useBuildkit: true
 profiles:
   - name: local
