@@ -6,6 +6,9 @@ build:
   artifacts:
     - image: subham328/kube-mgmt
       context: .
+      platforms:
+      - linux/amd64
+      - linux/arm64
       docker:
         buildArgs:
           VERSION: "{{.VERSION}}"
